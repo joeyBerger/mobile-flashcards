@@ -1,11 +1,10 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 
-const DeckView = () => {
-
+const DeckView = (props) => {
     return(
         <Text >
-            DECK VIEW NEW
+            {props.title} - {props.questions.length}
         </Text>
     )
 }

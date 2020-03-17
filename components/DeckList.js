@@ -3,11 +3,12 @@ import { Text, View, TouchableOpacity } from 'react-native'
 import DeckView from "./DeckView";
 import { DECK_STORAGE_KEY } from '../utils/api'
 import { AsyncStorage } from 'react-native'
+import { Provider, connect } from 'react-redux'
+import { recieveDecks } from '../actions'
 
-class DeckList extends React.Component {  //TODO: this could propbably be stateless component
+class DeckList extends React.Component {
 
-    componentDidMount() {
-        
+    componentDidMount() {        
         const dummyData = {
             React: {
               title: 'React',
@@ -32,35 +33,61 @@ class DeckList extends React.Component {  //TODO: this could propbably be statel
               ]
             }
           }
-
-
+        //   const navigation = useNavigation();
         //   AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(dummyData))
-        this.getStoredData();
+        this.getStoredData()
+        .then((res) => this.dispatchStoredData(res))
     }
 
     getStoredData() {
-        console.log('getStoredData')
         return AsyncStorage.getItem(DECK_STORAGE_KEY)
-        .then((res) => console.log('res',JSON.parse(res)["JavaScript"]))
+    }
+
+    dispatchStoredData(res) {
+        this.props.dispatch((recieveDecks(JSON.parse(res))))
+    }
+
+    tempButtonFunc() {
+        console.log('tempButtonFunc')
+        this.props.navigation.navigate('Profile')
+        // this.props.navigation.navigate({routeName: 'home'})
+        
     }
     
     render() {
+        if (!this.props.decks) {
+            return null  //TODO: eventually change this to loading
+        }
 
-        const length = [1,2,3]
+        const { decks } = this.props
+            
+        console.log('props',this.props)
 
         return(
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red' }}>
-                {/* <TouchableOpacity>
-                    <Text onPress = {(e) => this.getStoredData(e)}>
+                <TouchableOpacity>
+                    <Text onPress = {(e) => this.tempButtonFunc(e)}>
                         FAKE Button
                     </Text>
-                </TouchableOpacity> */}
-                {length.map(l => 
-                    <DeckView key = {l}/>
+                </TouchableOpacity>
+
+                {Object.keys(decks).map(key => 
+                    <DeckView 
+                    key = {key}
+                    title = {decks[key].title}
+                    questions = {decks[key].questions}
+                    />
                 )}
             </View>
         )
     }
 }
 
-export default DeckList
+
+function mapStateToProps({decks}) {
+    return{
+        decks
+    }
+}
+
+export default connect(mapStateToProps)(DeckList)

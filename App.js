@@ -5,10 +5,32 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
 import Constants from 'expo-constants';
 import DeckList from './components/DeckList'
-import { Provider } from 'react-redux'
+import { Provider, connect } from 'react-redux'
 import { createStore } from 'redux'
-
+import { AsyncStorage } from 'react-native'
 import reducer from './reducers'
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import NewDeck from './components/NewDeck'
+
+const MainNavigator = createAppContainer(createStackNavigator({
+  home: {
+    screen: MyTabs,
+    navigationOptions: {
+      header: () => false
+    },
+  },
+  Profile: {
+    screen: Profile,
+    navigationOptions: () => ({
+
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: 'purple',
+      },
+    }),
+  },
+}));
 
 function Feed() {
   return (
@@ -36,35 +58,44 @@ function Notifications() {
 
 const Tab = createBottomTabNavigator();
 
+
 function MyTabs() {
   return (
-    <Tab.Navigator
-      initialRouteName="Feed"
-      tabBarOptions={{
-        activeTintColor: '#e91e63',
-      }}
-    >
-      <Tab.Screen
-        name="Feed"
-        component={DeckList}
-        options={{
-          tabBarLabel: 'Decks',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="cards" color={color} size={size} />
-          ),
+
+    <NavigationContainer>
+
+      <View style={{ backgroundColor: 'purple', height:Constants.statusBarHeight}}>
+        <StatusBar translucent/>
+      </View>
+
+      <Tab.Navigator
+        initialRouteName="Feed"
+        tabBarOptions={{
+          activeTintColor: '#e91e63',
         }}
-      />
-      <Tab.Screen
-        name="Notifications"
-        component={Notifications}
-        options={{
-          tabBarLabel: 'New Deck',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="plus-circle-outline" color={color} size={size} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+      >
+        <Tab.Screen
+          name="Feed"
+          component={DeckList}
+          options={{
+            tabBarLabel: 'Decks',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="cards" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={NewDeck}
+          options={{
+            tabBarLabel: 'New Deck',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="plus-circle-outline" color={color} size={size} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
 const styles = StyleSheet.create({
@@ -73,12 +104,6 @@ const styles = StyleSheet.create({
     alignItems:'center',
     flex:1,
   },
-  // container: {
-  //   flex: 1,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   height: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
-  // },
   text: {
     fontSize: 18,
     color: 'black',
@@ -86,25 +111,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'magenta',
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
 });
 
-export default class App extends React.Component {
+class App extends React.Component {
+
   render() {
     return (
       <Provider store={createStore(reducer)}>
         <View style = {styles.container}> 
-          <NavigationContainer >
+          {/* <NavigationContainer >
             <View style={{ backgroundColor: 'purple', height:Constants.statusBarHeight}}>
               <StatusBar translucent/>
             </View>
             <MyTabs />
-          </NavigationContainer>
+          </NavigationContainer> */}
+          <MainNavigator />
         </View>
       </Provider>
     )
   }
 }
 
+export default App;

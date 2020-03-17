@@ -5,16 +5,17 @@ export const ADD_DECK_QUESTION = 'ADD_DECK_QUESTION'
 export const REMOVE_DECK_QUESTION = 'REMOVE_DECK_QUESTION'
 
 export function recieveDecks(decks) {
+  // console.log('RECEIVE_DECKS RECEIVE_DECKS');
   return {
     type: RECEIVE_DECKS,
     decks
   }
 }
 
-export function addDeck(deck) {
+export function addDeck(deckName) {
   return {
     type: ADD_DECK,
-    deck
+    deckName
   }
 }
 
