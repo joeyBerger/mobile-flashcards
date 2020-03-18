@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity } from 'react-native'
 import DeckView from "./DeckView";
 import { DECK_STORAGE_KEY } from '../utils/api'
 import { AsyncStorage } from 'react-native'
-import { Provider, connect } from 'react-redux'
+import { connect } from 'react-redux'
 import { recieveDecks } from '../actions'
 
 class DeckList extends React.Component {
@@ -36,7 +36,7 @@ class DeckList extends React.Component {
         //   const navigation = useNavigation();
         //   AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(dummyData))
         this.getStoredData()
-        .then((res) => this.dispatchStoredData(res))
+        .then((res) => this.dispatchStoredData(res))      
     }
 
     getStoredData() {
@@ -49,9 +49,9 @@ class DeckList extends React.Component {
 
     tempButtonFunc() {
         console.log('tempButtonFunc')
-        this.props.navigation.navigate('Profile')
-        // this.props.navigation.navigate({routeName: 'home'})
-        
+        // this.props.navigation.navigate('InspectedDeck')
+        console.log('this.props.navigation',this.props.navigation.navigate(('InspectedDeck')))
+        // this.props.navigation.navigate('Profile')        
     }
     
     render() {
@@ -65,17 +65,18 @@ class DeckList extends React.Component {
 
         return(
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red' }}>
-                <TouchableOpacity>
+                {/* <TouchableOpacity>
                     <Text onPress = {(e) => this.tempButtonFunc(e)}>
                         FAKE Button
                     </Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 {Object.keys(decks).map(key => 
                     <DeckView 
                     key = {key}
                     title = {decks[key].title}
                     questions = {decks[key].questions}
+                    navigation = {this.props.navigation}
                     />
                 )}
             </View>

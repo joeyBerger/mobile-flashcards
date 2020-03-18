@@ -1,7 +1,12 @@
 import * as React from 'react';
-import { Text, View, StatusBar, StyleSheet } from 'react-native';
+import { Text, View, StatusBar, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import Temp from './components/Temp'
+
+
+
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
 import Constants from 'expo-constants';
 import DeckList from './components/DeckList'
@@ -10,127 +15,66 @@ import { createStore } from 'redux'
 import { AsyncStorage } from 'react-native'
 import reducer from './reducers'
 import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
 import NewDeck from './components/NewDeck'
+import InspectedDeck from './components/InspectedDeck'
+import AddQuestion from './components/AddQuestion'
 
-const MainNavigator = createAppContainer(createStackNavigator({
-  home: {
-    screen: MyTabs,
-    navigationOptions: {
-      header: () => false
-    },
-  },
-  Profile: {
-    screen: Profile,
-    navigationOptions: () => ({
-
-      headerTintColor: 'white',
-      headerStyle: {
-        backgroundColor: 'purple',
-      },
-    }),
-  },
-}));
-
-function Feed() {
+function SettingsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Feed!</Text>
-    </View>
-  );
-}
-
-function Profile() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Profile!</Text>
-    </View>
-  );
-}
-
-function Notifications() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'magenta' }}>
-      <Text>Notifications!</Text>
+      <Text>Settings!</Text>
     </View>
   );
 }
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-
-function MyTabs() {
+function Home() {
   return (
-
-    <NavigationContainer>
-
-      <View style={{ backgroundColor: 'purple', height:Constants.statusBarHeight}}>
-        <StatusBar translucent/>
-      </View>
-
-      <Tab.Navigator
-        initialRouteName="Feed"
-        tabBarOptions={{
-          activeTintColor: '#e91e63',
+    <Tab.Navigator>
+      <Tab.Screen
+        name="DeckList"
+        component={DeckList}
+        options={{
+          tabBarLabel: 'Decks',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="cards" color={color} size={size} />
+          ),
         }}
-      >
-        <Tab.Screen
-          name="Feed"
-          component={DeckList}
-          options={{
-            tabBarLabel: 'Decks',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="cards" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={NewDeck}
-          options={{
-            tabBarLabel: 'New Deck',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="plus-circle-outline" color={color} size={size} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+      />
+      <Tab.Screen
+        name="NewDeck"
+        component={NewDeck}
+        options={{
+          tabBarLabel: 'New Deck',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="plus-circle-outline" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 }
-const styles = StyleSheet.create({
-  MainContainer :{
-    justifyContent: 'center',
-    alignItems:'center',
-    flex:1,
-  },
-  text: {
-    fontSize: 18,
-    color: 'black',
-  },
-  container: {
-    flex: 1,
-    backgroundColor: 'magenta',
-  },
-});
 
 class App extends React.Component {
-
   render() {
     return (
       <Provider store={createStore(reducer)}>
-        <View style = {styles.container}> 
-          {/* <NavigationContainer >
-            <View style={{ backgroundColor: 'purple', height:Constants.statusBarHeight}}>
-              <StatusBar translucent/>
-            </View>
-            <MyTabs />
-          </NavigationContainer> */}
-          <MainNavigator />
-        </View>
+        <NavigationContainer>
+          <View style={{ backgroundColor: 'purple', height:Constants.statusBarHeight}}>
+            <StatusBar translucent/>
+          </View>
+          <Stack.Navigator>
+            <Stack.Screen name="Home" component={Home}/>
+            <Stack.Screen name="InspectedDeck" component={InspectedDeck} />
+            <Stack.Screen name="AddQuestion" component={AddQuestion} />
+            <Stack.Screen name="Settings" component={SettingsScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
       </Provider>
-    )
-  }
+    );
+  }  
 }
 
-export default App;
+export default App

@@ -1,11 +1,13 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, TouchableOpacity } from 'react-native'
 
 const DeckView = (props) => {
     return(
-        <Text >
-            {props.title} - {props.questions.length}
-        </Text>
+        <TouchableOpacity>
+            <Text onPress = {() => props.navigation.navigate('InspectedDeck', {key: props.title, itemId: 86, otherParam: 'anything you want here'})}>
+                {props.title} - {props.questions.length}
+            </Text>
+        </TouchableOpacity>
     )
 }
 

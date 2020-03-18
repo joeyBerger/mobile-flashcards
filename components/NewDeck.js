@@ -2,6 +2,8 @@ import React from 'react'
 import { Text, View, StatusBar, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
+import { DECK_STORAGE_KEY } from '../utils/api'
+import { AsyncStorage } from 'react-native'
 
 class NewDeck extends React.Component {
 
@@ -9,9 +11,15 @@ class NewDeck extends React.Component {
         deckName : ''
     }
     createDeck = () => {
-        console.log('create deck')
-
         this.props.dispatch(addDeck(this.state.deckName))
+        const newDeck = {
+            title : this.state.deckName,
+            questions : [],
+        }
+        AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
+            [this.state.deckName] : newDeck
+        }))
+        this.props.navigation.navigate('Feed')
     }
     onChangeText = (text) => {
         this.setState(() => ({
