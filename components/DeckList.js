@@ -34,7 +34,11 @@ class DeckList extends React.Component {
             }
           }
         //   const navigation = useNavigation();
-        //   AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(dummyData))
+          // AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(dummyData))
+
+
+        // AsyncStorage.removeItem(DECK_STORAGE_KEY)
+
         this.getStoredData()
         .then((res) => this.dispatchStoredData(res))      
     }
@@ -60,9 +64,8 @@ class DeckList extends React.Component {
         }
 
         const { decks } = this.props
-            
-        console.log('props',this.props)
-
+  
+        console.log('decks',decks);
         return(
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red' }}>
                 {/* <TouchableOpacity>
@@ -70,6 +73,8 @@ class DeckList extends React.Component {
                         FAKE Button
                     </Text>
                 </TouchableOpacity> */}
+
+                
 
                 {Object.keys(decks).map(key => 
                     <DeckView 

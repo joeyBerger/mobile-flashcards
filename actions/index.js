@@ -19,17 +19,19 @@ export function addDeck(deckName) {
   }
 }
 
-export function removeDeck(deck) {
+export function removeDeck(deckName) {
   return {
     type: REMOVE_DECK,
-    deck
+    deckName
   }
 }
 
-export function addDeckQuestion(question) {
+export function addDeckQuestion(questionInfo,name) {
+  // console.log(questionInfo)
   return {
     type: ADD_DECK_QUESTION,
-    question
+    questionInfo,
+    name
   }
 }
 

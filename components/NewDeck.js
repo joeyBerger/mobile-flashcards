@@ -19,7 +19,7 @@ class NewDeck extends React.Component {
         AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
             [this.state.deckName] : newDeck
         }))
-        this.props.navigation.navigate('Feed')
+        this.props.navigation.navigate('InspectedDeck', {key: this.state.deckName})
     }
     onChangeText = (text) => {
         this.setState(() => ({
@@ -47,12 +47,7 @@ class NewDeck extends React.Component {
     }
 }
 
-// function mapStateToProps({decks}) {
-function mapStateToProps( state ) {
-
-    console.log('state', state)
-    const decks = state.decks
-
+function mapStateToProps({ decks }) {
     return{
         decks
     }

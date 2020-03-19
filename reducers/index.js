@@ -1,7 +1,7 @@
 import { RECEIVE_DECKS, ADD_DECK, REMOVE_DECK, ADD_DECK_QUESTION, REMOVE_DECK_QUESTION } from '../actions'
 
 function decks(state = {}, action) {
-  console.log('\nin decks reducer',action);
+  // console.log('\nin decks reducer',action);
   switch (action.type) {
     case RECEIVE_DECKS:
       return {
@@ -22,13 +22,30 @@ function decks(state = {}, action) {
     }
 
     case REMOVE_DECK:
-        return {...state, ...action.deck}
+      const returnObj = {}
+      Object.keys(state.decks).filter(
+        key => key !== action.deckName
+      ).forEach(filteredKey => returnObj[filteredKey] = state.decks[filteredKey])
+      return {
+        ...state,
+        decks : {...returnObj}        
+    }
 
     case ADD_DECK_QUESTION:
-        return {...state, ...action.deck}
+      return {
+        ...state, 
+        decks : {
+          ...state.decks,
+          [action.name] : {
+              title : state.decks[action.name].title,
+              questions : state.decks[action.name].questions.concat(action.questionInfo)
+          }
+      }
+    }
 
     case REMOVE_DECK_QUESTION:
-        return {...state, ...action.deck}
+        return {
+          ...state, ...action.deck}
 
     default:
       return state;

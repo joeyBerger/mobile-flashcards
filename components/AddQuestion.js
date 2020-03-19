@@ -1,15 +1,35 @@
 import React from 'react'
 import { Text, View, StatusBar, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { addDeckQuestion } from '../actions'
+import { connect } from 'react-redux'
+import { AsyncStorage } from 'react-native'
+import { DECK_STORAGE_KEY } from '../utils/api'
 
 class AddQuestion extends React.Component {
 
     state = {
+        deckName : 'Javascript',
         question : '',
         answer : ''
     }
 
     handleSubmitButton = () => {
-        console.log('handleSubmitButton')
+
+        const returnObj = {
+            question: this.state.question,
+            answer: this.state.answer
+        }
+        const {title} = this.props.route.params
+        this.props.dispatch(addDeckQuestion(returnObj,title))
+
+        const updatedDeck = {...this.props.decks[title]}
+        updatedDeck.questions.push(returnObj);
+
+        AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
+            [title] : updatedDeck
+        }))  //TODO: move this to the utils folder
+
+        this.props.navigation.navigate('InspectedDeck', {key: title})
     }
 
     disableButton = () => {
@@ -32,9 +52,8 @@ class AddQuestion extends React.Component {
                 value={this.state.question}
                 />
 
-
                 <TextInput
-                style={{ height: 40, width: 300, borderColor: 'gray', borderWidth: 1 }}
+                style={{ height: 40, width: 300, borderColor: 'gray', borderWidth: 1, margin: 20 }}
                 onChangeText={text => this.onChangeText(text,'answer')}
                 value={this.state.answer}
                 />
@@ -49,6 +68,12 @@ class AddQuestion extends React.Component {
     }
 }
 
-export default AddQuestion
+function mapStateToProps({decks}) {
+    return{
+        decks
+    }
+}
+
+export default connect(mapStateToProps)(AddQuestion)
 
 

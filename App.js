@@ -4,9 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Temp from './components/Temp'
-
-
-
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
 import Constants from 'expo-constants';
 import DeckList from './components/DeckList'
@@ -18,6 +15,8 @@ import { createAppContainer } from 'react-navigation';
 import NewDeck from './components/NewDeck'
 import InspectedDeck from './components/InspectedDeck'
 import AddQuestion from './components/AddQuestion'
+import NoDeckWarning from './components/NoDeckWarning'
+import QuizManager from './components/QuizManager'
 
 function SettingsScreen() {
   return (
@@ -70,6 +69,8 @@ class App extends React.Component {
             <Stack.Screen name="InspectedDeck" component={InspectedDeck} />
             <Stack.Screen name="AddQuestion" component={AddQuestion} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
+            <Stack.Screen name="NoDeckWarning" component={NoDeckWarning} />
+            <Stack.Screen name="QuizManager" component={QuizManager} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
