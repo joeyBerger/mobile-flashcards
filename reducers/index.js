@@ -1,7 +1,6 @@
 import { RECEIVE_DECKS, ADD_DECK, REMOVE_DECK, ADD_DECK_QUESTION, REMOVE_DECK_QUESTION } from '../actions'
 
 function decks(state = {}, action) {
-  // console.log('\nin decks reducer',action);
   switch (action.type) {
     case RECEIVE_DECKS:
       return {
@@ -16,6 +15,7 @@ function decks(state = {}, action) {
             ...state.decks,
             [action.deckName] : {
                 title : action.deckName,
+                timeCreated : action.timeCreated,
                 questions : []
             }
         }
@@ -38,6 +38,7 @@ function decks(state = {}, action) {
           ...state.decks,
           [action.name] : {
               title : state.decks[action.name].title,
+              timeCreated : state.decks[action.name].timeCreated,
               questions : state.decks[action.name].questions.concat(action.questionInfo)
           }
       }

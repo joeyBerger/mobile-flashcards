@@ -11,13 +11,15 @@ class NewDeck extends React.Component {
         deckName : ''
     }
     createDeck = () => {
-        this.props.dispatch(addDeck(this.state.deckName))
+        timeCreated = Date.now()
+        this.props.dispatch(addDeck(this.state.deckName,timeCreated))
         const newDeck = {
             title : this.state.deckName,
             questions : [],
+            timeCreated
         }
         AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
-            [this.state.deckName] : newDeck
+            [this.state.deckName] : newDeck,
         }))
         this.props.navigation.navigate('InspectedDeck', {key: this.state.deckName})
     }

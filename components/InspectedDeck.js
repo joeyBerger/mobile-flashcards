@@ -18,9 +18,7 @@ class InspectedDeck extends React.Component {
         } else {
             this.props.navigation.navigate('QuizManager', {key: this.props.route.params.key})
             // this.props.navigation.navigate('QuizManager')
-
         }
-
     }    
     handleDeleteDeck = (title) => {
         this.props.dispatch(removeDeck(title))

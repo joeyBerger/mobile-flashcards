@@ -12,10 +12,11 @@ export function recieveDecks(decks) {
   }
 }
 
-export function addDeck(deckName) {
+export function addDeck(deckName,timeCreated) {
   return {
     type: ADD_DECK,
-    deckName
+    deckName,
+    timeCreated
   }
 }
 
@@ -27,7 +28,6 @@ export function removeDeck(deckName) {
 }
 
 export function addDeckQuestion(questionInfo,name) {
-  // console.log(questionInfo)
   return {
     type: ADD_DECK_QUESTION,
     questionInfo,

@@ -12,6 +12,7 @@ class DeckList extends React.Component {
         const dummyData = {
             React: {
               title: 'React',
+              timeCreated: 1584630929810,
               questions: [
                 {
                   question: 'What is React?',
@@ -25,6 +26,7 @@ class DeckList extends React.Component {
             },
             JavaScript: {
               title: 'JavaScript',
+              timeCreated: 1584631116040,
               questions: [
                 {
                   question: 'What is a closure?',
@@ -33,50 +35,30 @@ class DeckList extends React.Component {
               ]
             }
           }
-        //   const navigation = useNavigation();
-          // AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(dummyData))
 
-
+        // AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(dummyData))
         // AsyncStorage.removeItem(DECK_STORAGE_KEY)
 
         this.getStoredData()
         .then((res) => this.dispatchStoredData(res))      
     }
-
     getStoredData() {
         return AsyncStorage.getItem(DECK_STORAGE_KEY)
     }
-
     dispatchStoredData(res) {
         this.props.dispatch((recieveDecks(JSON.parse(res))))
-    }
-
-    tempButtonFunc() {
-        console.log('tempButtonFunc')
-        // this.props.navigation.navigate('InspectedDeck')
-        console.log('this.props.navigation',this.props.navigation.navigate(('InspectedDeck')))
-        // this.props.navigation.navigate('Profile')        
-    }
-    
+    }   
     render() {
         if (!this.props.decks) {
             return null  //TODO: eventually change this to loading
         }
-
-        const { decks } = this.props
-  
+        const { decks } = this.props  
         console.log('decks',decks);
         return(
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red' }}>
-                {/* <TouchableOpacity>
-                    <Text onPress = {(e) => this.tempButtonFunc(e)}>
-                        FAKE Button
-                    </Text>
-                </TouchableOpacity> */}
-
-                
-
-                {Object.keys(decks).map(key => 
+                {Object.keys(decks)
+                .sort((a,b) => decks[a].timeCreated - decks[b].timeCreated)                
+                .map(key => 
                     <DeckView 
                     key = {key}
                     title = {decks[key].title}
@@ -88,7 +70,6 @@ class DeckList extends React.Component {
         )
     }
 }
-
 
 function mapStateToProps({decks}) {
     return{

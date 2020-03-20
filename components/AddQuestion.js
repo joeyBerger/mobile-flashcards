@@ -14,10 +14,9 @@ class AddQuestion extends React.Component {
     }
 
     handleSubmitButton = () => {
-
         const returnObj = {
             question: this.state.question,
-            answer: this.state.answer
+            answer: this.state.answer,
         }
         const {title} = this.props.route.params
         this.props.dispatch(addDeckQuestion(returnObj,title))
