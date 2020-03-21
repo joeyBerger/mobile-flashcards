@@ -17,6 +17,7 @@ import InspectedDeck from './components/InspectedDeck'
 import AddQuestion from './components/AddQuestion'
 import NoDeckWarning from './components/NoDeckWarning'
 import QuizManager from './components/QuizManager'
+import colors from './utils/colors'
 
 function SettingsScreen() {
   return (
@@ -29,16 +30,23 @@ function SettingsScreen() {
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-function Home() {
+function Home(props) {
+  // {console.log('butt',props)}
   return (
-    <Tab.Navigator>
-      <Tab.Screen
+    <Tab.Navigator 
+      tabBarOptions={{
+        activeTintColor: colors.red,
+        inactiveTintColor: 'gray',
+        backgroundColor: 'black'
+      }}>
+      <Tab.Screen       
         name="DeckList"
         component={DeckList}
         options={{
           tabBarLabel: 'Decks',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="cards" color={color} size={size} />
+          tintColor: 'black',
+          tabBarIcon: ({ focused }) => (
+            <MaterialCommunityIcons name="cards" color={focused ? colors.red : 'gray'} size={25} />
           ),
         }}
       />
@@ -47,9 +55,10 @@ function Home() {
         component={NewDeck}
         options={{
           tabBarLabel: 'New Deck',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="plus-circle-outline" color={color} size={size} />
+          tabBarIcon: ({ focused }) => (
+            <MaterialCommunityIcons name="plus-circle-outline" color={focused ? colors.red : 'gray'} size={25} />
           ),
+
         }}
       />
     </Tab.Navigator>
@@ -61,12 +70,17 @@ class App extends React.Component {
     return (
       <Provider store={createStore(reducer)}>
         <NavigationContainer>
-          <View style={{ backgroundColor: 'purple', height:Constants.statusBarHeight}}>
+          <View style={{ backgroundColor: colors.orange, height:Constants.statusBarHeight}}>
             <StatusBar translucent/>
           </View>
-          <Stack.Navigator>
-            <Stack.Screen name="Home" component={Home}/>
-            <Stack.Screen name="InspectedDeck" component={InspectedDeck} />
+          <Stack.Navigator 
+            screenOptions={{
+              headerTintColor: 'white',
+              headerStyle: { backgroundColor: colors.orange },
+            }}
+          >
+            <Stack.Screen name="Home" component={Home} tintColor = {'butt'}/>
+            <Stack.Screen name="InspectedDeck" component={InspectedDeck} options={{title: 'Deck'}}/>
             <Stack.Screen name="AddQuestion" component={AddQuestion} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
             <Stack.Screen name="NoDeckWarning" component={NoDeckWarning} />

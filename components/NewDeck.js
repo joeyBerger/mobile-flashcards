@@ -6,7 +6,6 @@ import { DECK_STORAGE_KEY } from '../utils/api'
 import { AsyncStorage } from 'react-native'
 
 class NewDeck extends React.Component {
-
     state = {
         deckName : ''
     }
@@ -22,6 +21,9 @@ class NewDeck extends React.Component {
             [this.state.deckName] : newDeck,
         }))
         this.props.navigation.navigate('InspectedDeck', {key: this.state.deckName})
+        this.setState(() => ({
+            deckName : ''
+        }))
     }
     onChangeText = (text) => {
         this.setState(() => ({

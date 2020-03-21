@@ -3,7 +3,7 @@ import { Text, View, StatusBar, StyleSheet, TouchableOpacity, TextInput } from '
 import { connect } from 'react-redux'
 import { removeDeck } from '../actions'
 import { AsyncStorage } from 'react-native'
-import { DECK_STORAGE_KEY } from '../utils/api'
+import { DECK_STORAGE_KEY, getItem } from '../utils/api'
 
 class InspectedDeck extends React.Component {
 
@@ -11,7 +11,7 @@ class InspectedDeck extends React.Component {
         this.props.navigation.navigate('AddQuestion', {title: this.props.route.params.key});        
     }
     handleStartQuiz = () => {
-        console.log('handleStartQuiz')
+        // console.log('handleStartQuiz')
         const {key} = this.props.route.params
         if (this.props.decks[key].questions.length === 0) {
             this.props.navigation.navigate('NoDeckWarning')
@@ -23,15 +23,19 @@ class InspectedDeck extends React.Component {
     handleDeleteDeck = (title) => {
         this.props.dispatch(removeDeck(title))
         this.props.navigation.navigate('DeckList');
-        AsyncStorage.getItem(DECK_STORAGE_KEY)  //TODO: move this to the utils folder
-        .then((res) => {
-            const storedData = JSON.parse(res)
-            storedData[title] = undefined
-            delete storedData[title]
-            AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(storedData))
-        })
+        // AsyncStorage.getItem(DECK_STORAGE_KEY)  //TODO: move this to the utils folder
+        // .then((res) => {
+        //     const storedData = JSON.parse(res)
+        //     storedData[title] = undefined
+        //     delete storedData[title]
+        //     AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(storedData))
+        // })
+
+        getItem(title)
+
     }
     render() {
+        // console.log('in render of inspected deck',this.props.route.params)
         const {key} = this.props.route.params
         const deck = this.props.decks[key]
         if (deck === undefined) {
