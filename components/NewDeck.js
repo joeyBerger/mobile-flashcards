@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { addDeck } from '../actions'
 import { DECK_STORAGE_KEY } from '../utils/api'
 import { AsyncStorage } from 'react-native'
+import colors from '../utils/colors'
+import { Button } from 'react-native-elements';
 
 class NewDeck extends React.Component {
     state = {
@@ -25,6 +27,10 @@ class NewDeck extends React.Component {
             deckName : ''
         }))
     }
+    disableButton = () => {
+        const {deckName} = this.state
+        return deckName === ''
+    }
     onChangeText = (text) => {
         this.setState(() => ({
             deckName : text
@@ -32,24 +38,62 @@ class NewDeck extends React.Component {
     }
     render() {
         return (
-            <View>
-                <Text>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.blue }}>
+
+                <Text style={styles.headerText}>
                     WHAT IS THE NAME OF YOUR NEW DECK?
                 </Text>
                 <TextInput
-                style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                style={styles.textInput}
                 onChangeText={text => this.onChangeText(text)}
                 value={this.state.deckName}
                 />
-                <TouchableOpacity>
+                <View style={styles.buttonView}>
+                    <Button 
+                    onPress = {() => this.createDeck()}
+                    disabled={this.disableButton()}
+                    title="Submit"
+                    raised={true}
+                    buttonStyle={styles.buttonStyle}
+                    titleStyle={{color:colors.black}}
+                    />
+                </View>
+
+                {/* <TouchableOpacity>
                     <Text onPress = {() => this.createDeck()}>
                         Create Deck
                     </Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    headerText: { 
+        fontSize: 25,
+        margin: 30,
+        textAlign: 'center',
+        color: colors.black
+    },
+    textInput : {
+        height: 40, 
+        width: 300, 
+        borderColor: 'gray', 
+        borderWidth: 1, 
+        margin: 20, 
+        backgroundColor: 'white', 
+        textAlign: 'center'
+    },
+    buttonView: {
+        padding:40
+    },
+    buttonStyle : {
+        backgroundColor: colors.orange,        
+        height: 40,
+        width: 150
+    },
+})
 
 function mapStateToProps({ decks }) {
     return{

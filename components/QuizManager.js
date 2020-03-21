@@ -5,6 +5,7 @@ import XofY from './XofY'
 import QuizCard_FaceUp from './QuizCard_FaceUp'
 import QuizCard_FaceDown from './QuizCard_FaceDown'
 import QuizComplete from './QuizComplete'
+import colors from '../utils/colors'
 
 class QuizManager extends React.Component {
     state = {
@@ -66,14 +67,14 @@ class QuizManager extends React.Component {
         }
         if (this.state.cardState === 'up') {
             return(
-                <View>
+                <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center', backgroundColor: colors.green }} >
                     <XofY currentCard = {currentCard+1} totalCards = {cards.length}/>
                     <QuizCard_FaceUp question = {cards[currentCard].question} handleShowAnswer = {this.handleShowAnswer}/>
                 </View>
             )
         } else if (this.state.cardState === 'down') {
             return(
-                <View>                
+                <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center', backgroundColor: colors.green }} >          
                     {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}> */}
                     <XofY currentCard = {currentCard+1} totalCards = {cards.length}/>
                     <QuizCard_FaceDown answer = {cards[currentCard].answer} handleAnswerInput = {this.handleAnswerInput}/>
@@ -81,7 +82,9 @@ class QuizManager extends React.Component {
             )
         } else {
             return(
-                <QuizComplete handleQuizRestart = {this.handleQuizRestart} deckKey = {key} navigation = {this.props.navigation} score = {this.formatScore()}/>
+                <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center', backgroundColor: colors.blue }}>
+                    <QuizComplete handleQuizRestart = {this.handleQuizRestart} deckKey = {key} navigation = {this.props.navigation} score = {this.formatScore()}/>
+                </View>               
             )
         }
     }

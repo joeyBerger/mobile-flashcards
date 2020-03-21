@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { Text, View, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native'
 import DeckView from "./DeckView";
 import { DECK_STORAGE_KEY } from '../utils/api'
 import { AsyncStorage } from 'react-native'
@@ -24,7 +24,6 @@ class DeckList extends React.Component {
                   question: 'Where do you make Ajax requests in React?',
                   answer: 'The componentDidMount lifecycle event',
                   correctResponse: 'correct'
-
                 }
               ]
             },
@@ -62,10 +61,11 @@ class DeckList extends React.Component {
         const { decks } = this.props  
         // console.log('decks',decks);
         const decksArr = Object.keys(decks)
+        //align-items: flex-end
         return(
-            <View style={{ flex: 1, backgroundColor: colors.blue }}>
+            <View style={styles.container}>
                 {decksArr.length > 0 ? (
-                  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                  <View style={styles.deckContainer}> 
                   {decksArr.sort((a,b) => decks[a].timeCreated - decks[b].timeCreated)                
                     .map(key => 
                         <DeckView 
@@ -88,6 +88,61 @@ class DeckList extends React.Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+
+  container: {
+    flex: 1,
+    backgroundColor: colors.blue
+  },
+
+  deckContainer: {
+    flex: 1,
+    margin: 30,
+    justifyContent: 'flex-start', 
+    alignItems: 'center'
+  },
+
+
+  
+
+  row: {
+    flexDirection: "row",
+    flex: 1,
+    alignItems: "center"
+  },
+  iosSubmitBtn: {
+    backgroundColor: 'purple',
+    padding: 10,
+    borderRadius: 7,
+    height: 45,
+    marginLeft: 40,
+    marginRight: 40
+  },
+  AndroidSubmitBtn: {
+    backgroundColor: 'purple',
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 2,
+    alignSelf: "flex-end",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  submitBtnText: {
+    color: 'white',
+    fontSize: 22,
+    textAlign: "center"
+  },
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 30,
+    marginRight: 30
+  }
+});
 
 function mapStateToProps({decks}) {
     return{
