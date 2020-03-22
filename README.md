@@ -1,6 +1,6 @@
 # Mobile-Flashcards Project
 
-This project demonstrates the use of React, React Native, Redux, react-redux, store,  action creators, reducers, AsyncStorage, expo and the use of stateful, stateless components.
+This project demonstrates the use of React, React Native, Redux, react-redux, store,  action creators, reducers, AsyncStorage, expo and the use of stateful, stateless components. This app was mainly tested on an iOS simulator.
 
 ## Starting
 
