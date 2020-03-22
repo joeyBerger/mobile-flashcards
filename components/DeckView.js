@@ -30,8 +30,7 @@ const styles = StyleSheet.create({
         padding: 8,
         justifyContent: 'flex-start', 
         alignItems: 'center',
-        textAlign: 'center',
-
+        textAlign: 'center',       
     },    
     cardsText: {
         fontSize: 20,

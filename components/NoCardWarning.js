@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import colors from '../utils/colors'
 
 const NoCardWarning = () => {
@@ -19,22 +19,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: colors.black
     },
-    textInput : {
-        height: 40, 
-        width: 300, 
-        borderColor: 'gray', 
-        borderWidth: 1, 
-        margin: 20, 
-        backgroundColor: 'white', 
-        textAlign: 'center'
-    },
-    buttonView: {
-        padding:40
-    },
-    buttonStyle : {
-        backgroundColor: colors.orange,        
-        height: 40,
-        width: 150
-    },
 })
+
 export default NoCardWarning
