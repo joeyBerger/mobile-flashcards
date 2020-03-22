@@ -15,6 +15,7 @@ import AddQuestion from './components/AddQuestion'
 import NoCardWarning from './components/NoCardWarning'
 import QuizManager from './components/QuizManager'
 import colors from './utils/colors'
+import { setLocalNotification } from './utils/notifications'
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -59,6 +60,9 @@ function Home(props) {
 }
 
 class App extends React.Component {
+  componentDidMount() {    
+    setLocalNotification()
+  }
   render() {
     return (
       <Provider store={createStore(reducer)}>

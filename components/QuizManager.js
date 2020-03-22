@@ -6,6 +6,7 @@ import QuizCard_FaceUp from './QuizCard_FaceUp'
 import QuizCard_FaceDown from './QuizCard_FaceDown'
 import QuizComplete from './QuizComplete'
 import colors from '../utils/colors'
+import { setLocalNotification, clearLocalNotification } from '../utils/notifications'
 
 class QuizManager extends React.Component {
     state = {
@@ -41,6 +42,11 @@ class QuizManager extends React.Component {
             currentCard : quizComplete ? 0 : cs.currentCard+1,
             score : cs.score + tally
         }))
+        //set notification for tomorrow at 8:00 p.m.
+        if (quizComplete) {
+            clearLocalNotification()
+                .then(setLocalNotification())
+        }
     }
     handleNextInput = () => {
         this.setState(() => ({
