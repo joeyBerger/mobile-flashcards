@@ -47,6 +47,7 @@ class NewDeck extends React.Component {
                 style={styles.textInput}
                 onChangeText={text => this.onChangeText(text)}
                 value={this.state.deckName}
+                placeholder='Name'
                 />
                 <View style={styles.buttonView}>
                     <Button 
@@ -58,12 +59,6 @@ class NewDeck extends React.Component {
                     titleStyle={{color:colors.black}}
                     />
                 </View>
-
-                {/* <TouchableOpacity>
-                    <Text onPress = {() => this.createDeck()}>
-                        Create Deck
-                    </Text>
-                </TouchableOpacity> */}
             </View>
         )
     }

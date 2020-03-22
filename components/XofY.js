@@ -15,19 +15,12 @@ const XofY = (props) => {
 }
 
 const styles = StyleSheet.create({
-
     container: {
-        padding: 80,
-        
+        padding: 80,        
     },
     textContainer: {
-        // backgroundColor: colors.blue,
         width: 400,
-        height: 100,//65,
-        // flex: 1,
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        // alignSelf: 'center'
+        height: 100,
     },
     headerText: { 
         fontSize: 25,

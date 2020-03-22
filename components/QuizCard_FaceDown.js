@@ -14,9 +14,6 @@ const QuizCard_FaceDown = (props) => {
                 {props.answer}
                 </Text>            
             </View>
-            {/* <Text>
-                {props.answer}
-            </Text> */}
             <View style={{paddingTop: 60}}>
             <Button 
             onPress = {() => props.handleAnswerInput('correct')}
@@ -35,19 +32,8 @@ const QuizCard_FaceDown = (props) => {
             titleStyle={{color:colors.black}}
             />
             </View>
-            {/* <TouchableOpacity onPress = {() => props.handleAnswerInput('correct')}>
-                <Text>
-                    Correct
-                </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress = {() => props.handleAnswerInput('incorrect')}>
-                <Text>
-                    Incorrect
-                </Text>                        
-            </TouchableOpacity> */}
         </View>
     )
-
 }
 
 const styles = StyleSheet.create({

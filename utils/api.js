@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native'
 
 export const DECK_STORAGE_KEY = 'MobileFlashcards:decks';
+export const NOTIFICATION_KEY = 'MobileFlashcards:notification';
 
 export function mergeItem(title,updatedDeck) {
     AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
@@ -8,7 +9,7 @@ export function mergeItem(title,updatedDeck) {
     }))
 }
 export function getItem(title) {
-    AsyncStorage.getItem(DECK_STORAGE_KEY)  //TODO: move this to the utils folder
+    AsyncStorage.getItem(DECK_STORAGE_KEY)
     .then((res) => {
         const storedData = JSON.parse(res)
         storedData[title] = undefined

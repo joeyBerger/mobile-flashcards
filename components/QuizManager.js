@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StatusBar, StyleSheet, TouchableOpacity, TextInput, Picker } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux'
 import XofY from './XofY'
 import QuizCard_FaceUp from './QuizCard_FaceUp'
@@ -92,7 +92,6 @@ class QuizManager extends React.Component {
 
 function mapStateToProps({decks}, props) {
     return{
-        // cards : shuffleDeck(decks[props.route.params.key].questions),
         cards : decks[props.route.params.key].questions
     }
 }
